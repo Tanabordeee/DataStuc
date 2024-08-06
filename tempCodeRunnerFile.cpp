@@ -1,1 +1,1 @@
-cout << "PASS";
+    queue->enqueue(3002);
