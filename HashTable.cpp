@@ -61,7 +61,7 @@ class Separate_Chaining{
                 ptr = ptr->next;
             }
             if(ptr == NULL){
-                cout << "(-1 , - )" << endl;
+                cout << "-" << endl;
             }else{
                 cout << ptr->value << endl;
             }
