@@ -1,56 +1,53 @@
 #include <iostream>
-#include <stack>
 #include <vector>
+#include <queue>
 #include <algorithm>
 using namespace std;
-class Data{
+class Process{
     public:
-        int data;
+        char data;
         int arrivalTime;
         int serviceTime;
 };
-bool compare(const Data& a , const Data& b){
-    return a.arrivalTime < b.arrivalTime;
-}
+bool compare(const Process&a , const Process&b){return a.arrivalTime < b.arrivalTime;}
 int main(){
-    int q = 1;
-    vector<Data> v;
-    stack<Data> s;
-    stack<Data> tempstack;
-    for(int i = 0 ; i < 5 ; i++){
-        Data d;
-        cin >> d.data;
-        cin >> d.arrivalTime;
-        cin >> d.serviceTime;
-        v.push_back(d);
+    int n = 0;
+    int q = 0;
+    cin >> n >> q;
+    Process process;
+    vector<Process> v(n);
+    queue<Process>queue;
+    for(int i = 0; i < n; i ++){
+        cin >> v[i].data;
+        cin >> v[i].arrivalTime;
+        cin >> v[i].serviceTime;
     }
     sort(v.begin() , v.end() , compare);
-    int j = 0;
+    queue.push(v[0]);
     int round = 0;
-    s.push(v[0]);
-    while (!s.empty())
+    int j = 0;
+    while (true)
     {
-       while (j + 1 < v.size() && v[j + 1].arrivalTime <= round) {
-            j++;
-            s.push(v[j]);
-        }
-            Data temp = s.top();
-            s.pop(); 
-            cout << "round " << round << " process " << temp.data << " serviceTime " << temp.serviceTime << endl;
-            temp.serviceTime--;
-            round++;
+            Process temp = queue.front();
+            queue.pop();
+            for(int i = 0 ; i < q ; i ++){
+                cout<< "round "<< round << " " << temp.data << " servicetime " << temp.serviceTime << endl;
+                temp.serviceTime--;
+                round++;
+                if(j + 1 < n && v[j + 1].arrivalTime <= round) {
+                    queue.push(v[j + 1]);
+                    j++;
+                }
+                if (temp.serviceTime <= 0) {
+                break;
+                }
+            }
         if(temp.serviceTime > 0){
-            while(!s.empty()){
-                tempstack.push(s.top());
-                s.pop();
+            queue.push(temp);
             }
-            s.push(temp);
-            while (!tempstack.empty()){
-                s.push(tempstack.top());
-                tempstack.pop();
-            }
-            
+        if (queue.empty()) {
+            break;
         }
     }
-
+    
 }
