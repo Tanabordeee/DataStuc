@@ -3,42 +3,43 @@
 #include <algorithm>
 #include <vector>
 using namespace std;
+class Process{
+    public:
+        int data;
+        int ArrivalTime;
+        int ServiceTime;
+};
+bool compare(const Process& a, const Process& b){
+    return a.ArrivalTime < b.ArrivalTime;
+}
 int main(){
-    int round =0 ;
-    cin >> round;
-    stack<int> numStack;  
-    stack<int> arrivalStack;
-    stack<int> servalStack;
-    vector<int> arrnum(round);
-    vector<int> arrArrival(round);
-    vector<int> arrServal(round);
-    vector<int> index_serval(round);
-    int count = 0;
-    for(int i = 0; i < round; i++){
-        cin >> arrnum[i];
-        cin >> arrArrival[i];
-        cin >> arrServal[i];
-        index_serval[i] = i;
+    int n = 0;
+    cin >> n;
+    vector<Process> v(n);
+    stack<Process> stack;
+    for(int i = 0 ; i < n ; i++){
+        cin >> v[i].data;
+        cin >> v[i].ArrivalTime;
+        cin >> v[i].ServiceTime;
     }
-    sort(index_serval.begin(), index_serval.end(), [&](int a, int b) {
-    return arrArrival[a] < arrArrival[b];
-    });
-    int nextnum = arrnum[0];
-    int nextServal = arrServal[0];
-    
-    for(int i =0 ; i < round ; i++){
-        for(int j = 0 ; j < nextServal; j++){
-            count++;
-            if(count == arrArrival[j]){
-                numStack.push(arrnum[j]);
-                servalStack.push(arrServal[j]);
+    sort(v.begin() , v.end() , compare);
+    stack.push(v[0]);
+    int j = 1;
+    int round = 0;
+    while (!stack.empty())
+    {
+        Process temp = stack.top();
+        stack.pop();
+        int tempServiceTime = temp.ServiceTime;
+        for(int i = 0 ; i < temp.ServiceTime ; i++){
+            cout << temp.data << " : " << tempServiceTime << endl;
+            tempServiceTime--;
+            round++;
+            if(round == v[j].ArrivalTime){
+                stack.push(v[j]);
+                j++;
             }
-            cout << nextnum << ":" << nextServal - j << endl;
         }
-        nextnum = numStack.top();
-        nextServal = servalStack.top();
-        numStack.pop();
-        servalStack.pop();
     }
     return 0;
 }
