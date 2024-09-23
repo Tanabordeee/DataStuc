@@ -89,7 +89,7 @@ public:
         c->right = root;
         root->left = t;
         root->height = max(Height(root->left), Height(root->right)) + 1;
-        c->height = max(Height(root->left), Height(root->right)) + 1;
+        c->height = max(Height(c->left), Height(c->right)) + 1;
         // update new root
         root = c;
     }
@@ -100,7 +100,7 @@ public:
         c->left = root;
         root->right = t;
         root->height = max(Height(root->left), Height(root->right)) + 1;
-        c->height = max(Height(root->left), Height(root->right)) + 1;
+        c->height = max(Height(c->left), Height(c->right)) + 1;
         //update new root
         root = c;
     }
@@ -116,15 +116,58 @@ public:
         preorder(root->left);
         preorder(root->right);
     }
+
+    Node *Delete(Node *&root,int data){
+        if(root == NULL){ 
+            return root;
+        }
+        else if(data < root->data){ root->left = Delete(root->left , data);}
+        else if(data > root->data){ root->right = Delete(root->right , data);}
+        else{
+            if(root->left == NULL && root->right == NULL){
+                delete root;
+                root = NULL;
+            }else{
+                if(root->left != NULL && root->right == NULL){
+                    Node *temp = root->left;
+                    delete root;
+                    root = temp;
+                }
+                else if(root ->right != NULL && root ->left == NULL){
+                    Node *temp = root->right;
+                    delete root;
+                    root = temp;
+                }
+                else if(root ->left != NULL && root->right != NULL){
+                    Node *temp = Predesser(root->left);
+                    root->data = temp->data;
+                    root->left = Delete(root->left , temp->data);
+                }
+            }
+        }
+        if(root != NULL){
+            root->height = Height(root);
+            rotate(root);
+        }
+        return root;
+    }
+    Node *Predesser(Node *&root){
+        if(root->right == NULL) {return root;}
+        return Predesser(root->right);
+    }
 };
 int main()
 {
     Node *root = NULL;
     AVL avl;
-    for (int i = 0; i < 999999; i++)
-    {
-        avl.insert(root, i);
-    }
+    avl.insert(root , 12);
+    avl.insert(root , 8);
+    avl.insert(root , 18);
+    avl.insert(root , 17);
+    avl.insert(root , 11);
+    avl.insert(root , 5);
+    avl.insert(root , 4);
+    avl.Delete(root , 4);
     avl.preorder(root);
     return 0;
 }
