@@ -61,19 +61,43 @@ public:
             }
         }
     }
+    void dft(int start){
+        vector<bool> visited(n , false);
+        dfthelper(start ,visited);
+    }
+    void dfthelper(int current , vector<bool>& visited){
+        visited[current] = true;
+        cout << current << " ";
+        for(int i =  0 ; i < n ; i++){
+            if(matrix[current][i] > 0 && !visited[i]){
+                dfthelper(i , visited);
+            }
+        }
+    }
 };
 int main()
 {
-    Graph g(6);
-    g.addEdge(0, 1, 1);
-    g.addEdge(1, 0, 1);
-    g.addEdge(0, 2, 1);
-    g.addEdge(2, 0, 1);
-    g.addEdge(1, 2, 1);
-    g.addEdge(2, 1, 1);
-    g.print();
-    cout << "BFS starting from node 0: ";
-    g.bfs(0); // Start BFS from node 0
-    cout << endl;
+    int n , vertex , vertex2 , weight , start;
+    char input;
+    cin >> n;
+    Graph g(n);
+    while(true){
+        cin >> input;
+        if(input == 'e'){
+            cin >> vertex >> vertex2 , weight;
+            g.addEdge(vertex , vertex2 , weight);
+        }
+        else if(input == 'd'){
+            cin >> start;
+            g.dft(start);
+        }
+        else if(input == 'b'){
+            cin >> start;
+            g.bfs(start);
+        }
+        else if(input == 'q'){
+            break;
+        }else if (input == 's'){}
+    }
     return 0;
 }
