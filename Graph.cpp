@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 #include <vector>
 using namespace std;
 class Graph
@@ -42,6 +43,24 @@ public:
             cout << endl;
         }
     }
+    void bfs(int start){
+        vector<bool> visited(n , false);
+        queue<int> queue;
+        visited[start] = true;
+        queue.push(start);
+        while(!queue.empty()){
+            int current = queue.front();
+            queue.pop();
+            cout << current << " ";
+
+            for(int i = 0; i < n; i++){
+                if(matrix[current][i] > 0 && !visited[i]){
+                    visited[i] = true;
+                    queue.push(i);
+                }
+            }
+        }
+    }
 };
 int main()
 {
@@ -53,6 +72,8 @@ int main()
     g.addEdge(1, 2, 1);
     g.addEdge(2, 1, 1);
     g.print();
-
+    cout << "BFS starting from node 0: ";
+    g.bfs(0); // Start BFS from node 0
+    cout << endl;
     return 0;
 }
