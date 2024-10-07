@@ -23,8 +23,8 @@ class Stack{
             cout << "Stack Underflow" << endl;
             return 0;
         }else{
-            int x = arr[top--];
-            return x;
+            int data = arr[top--];
+            return data;
         }
     }
 

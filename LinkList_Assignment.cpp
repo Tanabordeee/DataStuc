@@ -38,9 +38,6 @@ class LinkList{
             return false;
         }
         void Insert_Before(int value , int id){
-            if(Check(value)){
-                return;
-            }
             Node *data = new Node(value);
             Node *ptr;
             if(head == nullptr){
@@ -68,9 +65,6 @@ class LinkList{
             }
         }
         void Insert_After(int value , int id){
-            if(Check(value)){
-                return;
-            }
             Node *data = new Node(value);
             Node *ptr;
             if(head == nullptr){

@@ -7,11 +7,15 @@ class Queue{
         int back = -1;
         int arr[SIZE];
         void enqueue(int num){
-            back++;
-            arr[back] = num;
+            if(!back == SIZE - 1){
+                back++;
+                arr[back] = num;
+            }
         }
-        void dequeue(){
-            arr[++front];
+        int dequeue(){
+            if(!(front > back)){
+                return arr[++front];
+            }
         }
         void Print(){
             for(int i = front; i <= back; i++){

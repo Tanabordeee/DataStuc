@@ -105,20 +105,15 @@ class Tree{
         }
 };
 int main(){
-    Tree *tree = new Tree(24);
-    tree->insert(tree->root , 10);
-    tree->insert(tree->root , 5);
+    Tree *tree = new Tree(5);
     tree->insert(tree->root , 3);
+    tree->insert(tree->root , 9);
+    tree->insert(tree->root , 4);
     tree->insert(tree->root , 7);
-    tree->insert(tree->root , 20);
-    tree->insert(tree->root , 18);
-    tree->insert(tree->root , 30);
-    tree->insert(tree->root , 26);
-    tree->insert(tree->root , 25);
-    tree->insert(tree->root , 38);
-    tree->insert(tree->root , 45);
-    tree->Delete(tree->root , 5);
-    tree->Delete(tree->root , 24);
+    tree->insert(tree->root , 12);
+    tree->insert(tree->root , 6);
+    tree->insert(tree->root , 8);
+    tree->Delete(tree->root , 9);
     tree->preorder(tree->root);
     cout << "---------------END-----------------" << endl;
     tree->postorder(tree->root);
