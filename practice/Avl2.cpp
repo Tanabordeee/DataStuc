@@ -26,7 +26,6 @@ class Avl{
         void insert(Node*&root , int data){
             if(root == NULL) {
                 root = new Node(data);
-                return;
             }
             if(data > root->data){
                 insert(root->right , data);
